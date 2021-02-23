@@ -1,6 +1,8 @@
 let db;
+// request db instance
 const request = window.indexedDB.open(budget, 1);
 
+// create object store inside the openupgradeneeded method
 request.onupgradeneeded = event => {
     const db = event.target.result;
     db.createObjectStore("pending", {autoIncrement: true})
@@ -18,10 +20,12 @@ request.onsuccess = event => {
     }
 }
 
+// save record 
 const saveRecord = (record) => {
     const transaction = db.transaction(["pending"], "readwrite");
     const store = transaction.objectStore("pending");
 
+    // add data to objectStore
     store.add(record);
 }
 

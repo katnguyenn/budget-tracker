@@ -24,3 +24,34 @@ const saveRecord = (record) => {
 
     store.add(record);
 }
+
+const checkDatabase = () => {
+    // open transaction on pending db
+    const transaction = db.transaction(["pending"], "readwrite");
+    // access pending object store 
+    const store = transaction.objectStore("pending");
+    // get all records from store 
+    const getAll = store.getAll();
+
+    getAll.onsuccess = () => {
+        if(getAll.result.length > 0) {
+            fetch("/api/transaction/bulk", {
+                method: "POST",
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json"
+                }
+            }).then(response => response.json())
+            .then(() => {
+                // if successful, open transaction on pending db
+                const transaction = db.transaction(["pending"], "readwrite");
+                // access pending object store 
+                const store = transaction.objectStore("pending");
+                // clear items in store
+                store.clear();
+            })
+        }
+    }
+
+}

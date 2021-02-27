@@ -1,6 +1,6 @@
 let db;
 // request db instance
-const request = window.indexedDB.open(budget, 1);
+const request = window.indexedDB.open("budget", 1);
 
 // create object store inside the openupgradeneeded method
 request.onupgradeneeded = event => {

@@ -16,4 +16,13 @@ When brought back online:
 
 Offline entries should be added to tracker.
 
+## Installation
+
+* Express
+* Mongoose
+* Morgan
+
 ![Budget Tracker](public/image/budget-tracker.png)
+
+## Link
+[Application](https://offline-budget-tracker-v1.herokuapp.com/)
